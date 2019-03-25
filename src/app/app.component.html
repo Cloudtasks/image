@@ -1,0 +1,1 @@
+<img *ngIf="state.visible" [hidden]="!state.loaded" (load)="onLoad()" [src]="state.url" [alt]="alt" (error)="onError()" />

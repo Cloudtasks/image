@@ -1,0 +1,8 @@
+CHANGELOG.md
+README.md
+package.json
+package-lock.json
+coverage/
+docs/
+dist/
+public/
