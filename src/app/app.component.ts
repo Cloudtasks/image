@@ -62,7 +62,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.parseOptions()
 
     if (this.isLocal() || typeof window === 'undefined') {
-      return this.setState('url', this.src)
+      return this.setState({ url: this.src, visible: true })
     }
 
     if (this.settings.lazy) {
@@ -71,7 +71,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       }, {})
       this.intersectionObserver.observe(<Element>this.el)
     } else if (!this.state.visible) {
-      this.setState('visible', true)
+      this.setState({ visible: true })
     }
 
     if (this.size) {
@@ -103,21 +103,21 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   onLoad() {
-    this.setState('loaded', true)
+    this.setState({ loaded: true })
   }
 
   onError() {
     if (this.tries === 0) {
       this.tries += 1
       if (this.placeholder || this.settings.placeholderImage) {
-        this.setState('url', this.getDefaultURL())
+        this.setState({ url: this.getDefaultURL() })
       }
     } else if (this.tries === 1) {
       this.tries += 1
-      this.setState('url', this.src)
+      this.setState({ url: this.src })
     } else if (this.tries === 2) {
       this.tries += 1
-      this.setState('url', this.getErrorURL())
+      this.setState({ url: this.getErrorURL() })
     }
   }
 
@@ -126,7 +126,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.renderer.setStyle(this.el, 'background-image', 'url(//' + this.getDefaultURL() + ')')
     }
 
-    this.setState('url', this.getURL())
+    this.setState({ url: this.getURL() })
   }
 
   private getURL(): string {
@@ -232,7 +232,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
     entries.forEach((entry: IntersectionObserverEntry) => {
       if (this.checkIfIntersecting(entry)) {
-        this.setState('visible', true)
+        this.setState({ visible: true })
         const domEvent = new CustomEvent('isVisible')
         this.el.dispatchEvent(domEvent)
         this.intersectionObserver.unobserve(<Element>this.el)
@@ -245,8 +245,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     return (<any>entry).isIntersecting && entry.target === this.el
   }
 
-  private setState(key, value) {
-    this.state = { ...this.state, [key]: value }
+  private setState(stateChange: any) {
+    this.state = { ...this.state, ...stateChange }
     this.cd.detectChanges()
   }
 }

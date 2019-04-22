@@ -47,3 +47,5 @@ typings
 tsconfig.json
 tslint.json
 typings.json
+
+dist

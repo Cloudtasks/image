@@ -174,7 +174,7 @@ export class CloudtasksService {
    * Sets the client id
    * @param id
    */
-  public setId(id: string): void {
+  public setKey(id: string): void {
     this.settings.apiKey = id
   }
 
