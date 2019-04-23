@@ -11,7 +11,7 @@ module.exports = {
 
     build: 'ng build --prod --output-hashing=none',
     package: {
-      default: 'nps build && nps package.pack && nps package.min',
+      default: 'nps build && ls -la dist && nps package.pack && nps package.min',
       pack: 'cat dist/cloudtasks/{runtime,polyfills,scripts,main}.js > public/cloudtasks-image.js',
       min: 'cat dist/cloudtasks/{runtime,polyfills,scripts,main}.js | gzip > public/cloudtasks-image.js.gz'
     },
