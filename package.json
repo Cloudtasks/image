@@ -5,7 +5,7 @@
   "author": "João Ribeiro <jonnybgod@gmail.com> (http://github.com/JonnyBGod)",
   "scripts": {
     "start": "nps",
-    "test": "nps test && nps e2e",
+    "test": "nps ci",
     "pre-commit": "lint-staged",
     "commit": "git-cz",
     "semantic-release": "semantic-release"

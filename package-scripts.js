@@ -7,6 +7,8 @@ module.exports = {
     e2e: 'ng e2e',
     dev: 'ng serve',
 
+    ci: 'ng test --watch=false && ng e2e',
+
     build: 'ng build --prod --output-hashing=none',
     package: {
       default: 'nps build && nps package.pack && nps package.min',
