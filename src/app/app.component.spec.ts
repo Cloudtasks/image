@@ -122,7 +122,7 @@ describe('AppComponent', () => {
   it('should force size', async(() => {
     TestBed.overrideComponent(TestComponent, {
       set: {
-        template: `<app-root src="http://example.com/image.jpg" style="width: 823px; height: 312px" forceSize="true"></app-root>`
+        template: `<app-root src="http://example.com/image.jpg" style="width: 823px; height: 312px" [forceSize]="true"></app-root>`
       }
     })
 
