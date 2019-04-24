@@ -23,7 +23,7 @@ First you need to load the script just before the end of the ```head``` section 
     apiKey: 'YOUR_API_KEY'
   }
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/@cloudtasks/image@1/dist/cloudtasks-image.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@cloudtasks/image@1/dist/cloudtasks-image.min.js"></script>
 ```
 
 Finally, you can use cloudtasks-image in your website by replacing your ```img``` tags with ```cloudtasks-image```, ```cloudtasks-img``` or ```ct-img```.

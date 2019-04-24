@@ -12,8 +12,8 @@ module.exports = {
     build: 'ng build --prod --output-hashing=none',
     package: {
       default: 'nps build && nps package.pack && nps package.min',
-      pack: 'cat dist/cloudtasks/*.js > public/cloudtasks-image.js && cp public/cloudtasks-image.js dist/cloudtasks-image.js',
-      min: 'cat dist/cloudtasks/*.js | gzip > public/cloudtasks-image.js.gz && cp public/cloudtasks-image.js.gz dist/cloudtasks-image.js.gz'
+      pack: 'node build-elements.js',
+      min: 'cat public/cloudtasks-image.js | gzip > public/cloudtasks-image.js.gz && cp public/cloudtasks-image.js.gz dist/cloudtasks-image.js.gz'
     },
     'semantic-release': 'nps package && semantic-release',
     commit: 'git-cz',
