@@ -10,7 +10,9 @@
     "commit": "git-cz",
     "semantic-release": "semantic-release"
   },
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@angular/animations": "^7.2.13",
     "@angular/common": "^7.2.13",
@@ -49,7 +51,9 @@
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
     "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage": "^1.1.2",
     "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-coveralls": "^2.1.0",
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "lint-staged": "^8.1.5",
@@ -63,8 +67,8 @@
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "~3.2.2"
   },
-  "main": "public/cloudtasks-image.js",
-  "es2015": "public/cloudtasks-image.js",
+  "main": "dist/cloudtasks-image.js",
+  "es2015": "dist/cloudtasks-image.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Cloudtasks/image.git"
@@ -111,12 +115,10 @@
         {
           "assets": [
             {
-              "path": "public/cloudtasks-image.js",
-              "label": "JS distribution"
+              "path": "public/cloudtasks-image.js"
             },
             {
-              "path": "public/cloudtasks-image.js.gz",
-              "label": "JS gzipped distribution"
+              "path": "public/cloudtasks-image.js.gz"
             }
           ]
         }

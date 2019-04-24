@@ -17,7 +17,7 @@ node_js:
 before_install:
   - npm i -g nps
 after_success:
-  - test $TRAVIS_BRANCH = "master" && nps semantic-release
+  - nps semantic-release
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"

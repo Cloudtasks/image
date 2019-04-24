@@ -48,4 +48,6 @@ tsconfig.json
 tslint.json
 typings.json
 
-dist
+dist/cloudtasks
+/public/*.js
+/public/*.js.gz
