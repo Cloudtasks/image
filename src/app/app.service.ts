@@ -211,7 +211,7 @@ export class CloudtasksService {
     }
 
     return (
-      '//' +
+      'https://' +
       this.serviceUrl() +
       '/' +
       this.settings.apiKey +
