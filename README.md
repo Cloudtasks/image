@@ -49,7 +49,7 @@ Finally, you can use cloudtasks-image in your website by replacing your ```img``
 - `[src]`: (string) (required) Sets original image url
 - `[options]`: (object) (optional) Sets options for image processing ([Docs](https://cloudtasks.io/docs/image/#image))
 - `[placeholder]`: (string) (optional) Sets placeholder image url to be used while waiting for original image
-- `[sze]`: (string) (optional) Sets size for image processing (if not set we will try to check the best size automatically)
+- `[size]`: (string) (optional) Sets size for image processing (if not set we will try to check the best size automatically)
 - `[forceSize]`: (boolean) (optional) Forces the exact size for image processing
 - `(isVisible)`: (EventEmitter) (optional) triggered once the image enters the viewport
 

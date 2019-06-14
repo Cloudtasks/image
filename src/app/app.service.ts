@@ -158,10 +158,23 @@ export class CloudtasksService {
     }
 
     if (typeof window !== 'undefined' && (window as any).cloudtasks) {
-      this.settings = { ...this.settings, ...(window as any).cloudtasks }
+      if (typeof (window as any).cloudtasks.settings === 'undefined') {
+        Object.assign(window as any, { cloudtasksSettings: (window as any).cloudtasks })
+      } else {
+        Object.assign(window as any, { cloudtasksSettings: (window as any).cloudtasks.settings })
+      }
+      if ((window as any).cloudtasksSettings) {
+        this.settings = { ...this.settings, ...(window as any).cloudtasksSettings }
+      } else if ((window as any).cloudtasks.settings) {
+        this.settings = { ...this.settings, ...(window as any).cloudtasks.settings }
+      } else {
+        this.settings = { ...this.settings, ...(window as any).cloudtasks }
+      }
     }
 
-    Object.assign(window as any, { cloudtasks: this })
+    if (typeof window !== 'undefined') {
+      Object.assign(window as any, { cloudtasks: this })
+    }
   }
 
   /**
@@ -312,4 +325,8 @@ export class CloudtasksService {
     const elem = document.createElement('canvas')
     return elem.getContext && elem.getContext('2d') && elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
   }
+}
+
+if (typeof window !== 'undefined') {
+  Object.assign(window as any, { cloudtasks: new CloudtasksService() })
 }
