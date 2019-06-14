@@ -1,6 +1,6 @@
 {
   "name": "@cloudtasks/image",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Allows you to serve highly optimized images to your apps.",
   "author": "João Ribeiro <jonnybgod@gmail.com> (http://github.com/JonnyBGod)",
   "scripts": {
