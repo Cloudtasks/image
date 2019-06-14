@@ -29,7 +29,8 @@
                 "input": "node_modules/document-register-element/build/document-register-element.js"
               }
             ],
-            "es5BrowserSupport": true
+            "es5BrowserSupport": true,
+            "aot": true
           },
           "configurations": {
             "production": {

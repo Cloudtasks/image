@@ -5,7 +5,8 @@
 [![Coverage Status](https://coveralls.io/repos/Cloudtasks/image/badge.svg?branch=master&service=github)](https://coveralls.io/github/Cloudtasks/image?branch=master)
 [![dependencies Status](https://david-dm.org/Cloudtasks/image/status.svg)](https://david-dm.org/Cloudtasks/image)
 
-![https://www.jsdelivr.com/package/npm/@cloudtasks/image](https://data.jsdelivr.com/v1/package/npm/@cloudtasks/image/badge?style=rounded)
+[![](https://data.jsdelivr.com/v1/package/npm/@cloudtasks/image/badge)](https://www.jsdelivr.com/package/npm/@cloudtasks/image)
+
 
 Allows you to serve highly optimized images to your client apps.
 

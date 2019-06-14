@@ -13,8 +13,13 @@ module.exports = {
     package: {
       default: 'nps build && nps package.pack && nps package.min',
       pack: 'node build-elements.js',
-      min:
-        'cat public/cloudtasks-image.js | gzip > public/cloudtasks-image.js.gz && cp public/cloudtasks-image.js.gz dist/cloudtasks-image.js.gz'
+      min: {
+        default: 'nps package.min.modern && nps package.min.legacy',
+        modern:
+          'cat public/cloudtasks-image.js | gzip > public/cloudtasks-image.js.gz && cp public/cloudtasks-image.js.gz dist/cloudtasks-image.js.gz',
+        legacy:
+          'cat public/cloudtasks-image.legacy.js | gzip > public/cloudtasks-image.legacy.js.gz && cp public/cloudtasks-image.legacy.js.gz dist/cloudtasks-image.legacy.js.gz'
+      }
     },
     'semantic-release': 'nps package && semantic-release',
     commit: 'git-cz',
