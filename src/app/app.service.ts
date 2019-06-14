@@ -160,6 +160,8 @@ export class CloudtasksService {
     if (typeof window !== 'undefined' && (window as any).cloudtasks) {
       this.settings = { ...this.settings, ...(window as any).cloudtasks }
     }
+
+    Object.assign(window as any, { cloudtasks: this })
   }
 
   /**

@@ -11,7 +11,7 @@ import { AppComponent } from './app.component'
   providers: [],
   entryComponents: [AppComponent]
 })
-export class AppModule {
+export class CloudtasksModule {
   constructor(private injector: Injector) {}
 
   ngDoBootstrap() {
