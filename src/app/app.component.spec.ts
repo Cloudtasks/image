@@ -5,7 +5,7 @@ import { SpyLocation } from '@angular/common/testing'
 
 import { AppComponent } from './app.component'
 
-import { AppModule } from './app.module'
+import { CloudtasksModule } from './app.module'
 import { CloudtasksService } from './app.service'
 
 @Component({
@@ -22,7 +22,7 @@ class TestComponent {
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, AppModule],
+      imports: [CommonModule, CloudtasksModule],
       declarations: [TestComponent],
       providers: [{ provide: Location, useClass: SpyLocation }]
     })
