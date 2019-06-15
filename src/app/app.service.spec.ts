@@ -25,9 +25,4 @@ describe('CloudtasksService', () => {
     service.settings.placeholderImage = 'http://example.com/placeholderImage.jpg'
     expect(service.settings.placeholderImage).toBe('http://example.com/placeholderImage.jpg')
   })
-
-  it('gets service settings', () => {
-    var settings = service.getSettings()
-    expect(settings.dev).toBe(false)
-  })
 })

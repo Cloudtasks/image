@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 /public/*.js
 /public/*.js.gz
+coverage

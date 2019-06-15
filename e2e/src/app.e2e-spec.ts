@@ -12,7 +12,7 @@ describe('workspace-project App', () => {
     await page.navigateTo()
     const imgs = await element.all(by.css('img'))
 
-    expect(imgs.length).toBe(2)
+    expect(imgs.length).toBe(3)
     expect(imgs[0].getAttribute('src')).toContain(
       'https://cloudtasks.global.ssl.fastly.net/78e8a5ae8293dcd935ac0bf9146bd622f20096fc/'
     )

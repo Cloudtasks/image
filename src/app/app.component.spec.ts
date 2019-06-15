@@ -9,7 +9,7 @@ import { CloudtasksModule } from './app.module'
 import { CloudtasksService } from './app.service'
 
 @Component({
-  selector: 'TestComponent',
+  selector: 'app-test-component',
   template: ``
 })
 class TestComponent {
@@ -45,9 +45,9 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
-      expect(compiled.src).toMatch(/\/\/cloudtasks.global.ssl.fastly.net\/YOUR_CLIENT_ID/)
+      expect(compiled.src).toMatch(/\/\/(cloudtasks-images-dev|cloudtasks).global.ssl.fastly.net\/YOUR_CLIENT_ID/)
     })
   }))
 
@@ -62,7 +62,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
       expect(compiled.src).toBe('http://localhost:9876/image.jpg')
     })
@@ -79,7 +79,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
       expect(compiled.src).toBe('http://localhost:9876/image.jpg')
     })
@@ -96,7 +96,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
       expect(compiled.src).toMatch(/800x600/)
     })
@@ -113,7 +113,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
       expect(compiled.src).toMatch(/800x600/)
     })
@@ -130,7 +130,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
       expect(compiled.src).toMatch(/823x312/)
     })
@@ -147,7 +147,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.querySelector('img')
+      const compiled = fixture.debugElement.nativeElement.querySelector('img')
 
       expect(compiled.src).toMatch(/trim/)
     })
@@ -164,7 +164,7 @@ describe('AppComponent', () => {
       const fixture = TestBed.createComponent(TestComponent)
 
       fixture.detectChanges()
-      let compiled = fixture.debugElement.nativeElement.children[0]
+      const compiled = fixture.debugElement.nativeElement.children[0]
 
       expect(compiled.style['background-image']).toMatch(/placeholderImage/)
     })
