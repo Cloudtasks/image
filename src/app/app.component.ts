@@ -21,13 +21,66 @@ declare var global: any
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
-  @Input() src
-  @Input() alt
+  private _src: string
+  private _alt: string
+  private _options: any
+  private _placeholder: string
+  private _size: string
+  private _forceSize: boolean
 
-  @Input() options: any
-  @Input() placeholder: string
-  @Input() size: string
-  @Input() forceSize: boolean
+  @Input()
+  set src(src: string) {
+    this._src = src
+    this.ngAfterViewInit()
+  }
+  get src(): string {
+    return this._src
+  }
+
+  @Input()
+  set alt(alt: string) {
+    this._alt = alt
+    this.ngAfterViewInit()
+  }
+  get alt(): string {
+    return this._alt
+  }
+
+  @Input()
+  set options(options: any) {
+    this._options = options
+    this.ngAfterViewInit()
+  }
+  get options(): any {
+    return this._options
+  }
+
+  @Input()
+  set placeholder(placeholder: string) {
+    this._placeholder = placeholder
+    this.ngAfterViewInit()
+  }
+  get placeholder(): string {
+    return this._placeholder
+  }
+
+  @Input()
+  set size(size: string) {
+    this._size = size
+    this.ngAfterViewInit()
+  }
+  get size(): string {
+    return this._size
+  }
+
+  @Input()
+  set forceSize(forceSize: boolean) {
+    this._forceSize = forceSize
+    this.ngAfterViewInit()
+  }
+  get forceSize(): boolean {
+    return this._forceSize
+  }
 
   @Output() isVisible = new EventEmitter()
 

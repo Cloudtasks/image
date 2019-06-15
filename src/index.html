@@ -68,5 +68,12 @@
       enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius
       laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
     </p>
+
+    <cloudtasks-img id="dynamic-img" src="/"></cloudtasks-img>
+    <script>
+      setTimeout(() => {
+        document.getElementById("dynamic-img").src = "/assets/angular-logo.png";
+      }, 2000)
+    </script>
   </body>
 </html>
