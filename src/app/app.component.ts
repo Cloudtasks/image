@@ -77,7 +77,7 @@ export class AppComponent implements OnDestroy {
 
   @Input()
   set forceSize(forceSize: boolean) {
-    this._forceSize = ((forceSize as unknown) as string) === 'true'
+    this._forceSize = forceSize === true || ((forceSize as unknown) as string) === 'true'
     this.init()
   }
   get forceSize(): boolean {
@@ -86,7 +86,7 @@ export class AppComponent implements OnDestroy {
 
   @Input()
   set autoResize(autoResize: boolean) {
-    const value = ((autoResize as unknown) as string) === 'true'
+    const value = autoResize === true || ((autoResize as unknown) as string) === 'true'
     console.log(value)
     if (this._autoResize !== value && !value && this.resizeObserver) {
       console.log('unsubscribe')
