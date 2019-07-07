@@ -2,7 +2,6 @@ import {
   Component,
   EventEmitter,
   Output,
-  AfterViewInit,
   OnDestroy,
   Input,
   ElementRef,
@@ -11,6 +10,8 @@ import {
   Renderer2
 } from '@angular/core'
 import { CloudtasksService } from './app.service'
+import { Subscription } from 'rxjs'
+import { auditTime } from 'rxjs/operators'
 
 declare var global: any
 
@@ -20,18 +21,19 @@ declare var global: any
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements OnDestroy {
   private _src: string
   private _alt: string
   private _options: any
   private _placeholder: string
   private _size: string
   private _forceSize: boolean
+  private _autoResize = true
 
   @Input()
   set src(src: string) {
     this._src = src
-    this.ngAfterViewInit()
+    this.init()
   }
   get src(): string {
     return this._src
@@ -40,7 +42,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   @Input()
   set alt(alt: string) {
     this._alt = alt
-    this.ngAfterViewInit()
+    this.init()
   }
   get alt(): string {
     return this._alt
@@ -49,7 +51,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   @Input()
   set options(options: any) {
     this._options = options
-    this.ngAfterViewInit()
+    this.init()
   }
   get options(): any {
     return this._options
@@ -58,7 +60,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   @Input()
   set placeholder(placeholder: string) {
     this._placeholder = placeholder
-    this.ngAfterViewInit()
+    this.init()
   }
   get placeholder(): string {
     return this._placeholder
@@ -67,7 +69,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   @Input()
   set size(size: string) {
     this._size = size
-    this.ngAfterViewInit()
+    this.init()
   }
   get size(): string {
     return this._size
@@ -75,11 +77,26 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   @Input()
   set forceSize(forceSize: boolean) {
-    this._forceSize = forceSize
-    this.ngAfterViewInit()
+    this._forceSize = ((forceSize as unknown) as string) === 'true'
+    this.init()
   }
   get forceSize(): boolean {
     return this._forceSize
+  }
+
+  @Input()
+  set autoResize(autoResize: boolean) {
+    const value = ((autoResize as unknown) as string) === 'true'
+    console.log(value)
+    if (this._autoResize !== value && !value && this.resizeObserver) {
+      console.log('unsubscribe')
+      this.resizeObserver.unsubscribe()
+    }
+    this._autoResize = value
+    this.init()
+  }
+  get autoResize(): boolean {
+    return this._autoResize
   }
 
   @Output() isVisible = new EventEmitter()
@@ -91,15 +108,17 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     loaded: false
   }
 
-  private el: any
-  private settings: any
   private width: number
   private height: number
+
+  private el: any
+  private settings: any
   private optionsString = '/'
 
   private tries = 0
 
   private intersectionObserver?: IntersectionObserver
+  private resizeObserver?: Subscription
 
   constructor(
     private elRef: ElementRef,
@@ -111,14 +130,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.settings = this.cloudtasks.getSettings()
   }
 
-  ngAfterViewInit() {
+  init() {
     this.parseOptions()
 
     if (this.isLocal() || typeof window === 'undefined') {
       return this.setState({ url: this.src, visible: true })
     }
 
-    if (this.settings.lazy) {
+    if (this.settings.lazy && !this.intersectionObserver) {
       this.intersectionObserver = new IntersectionObserver(entries => {
         this.checkForIntersection(entries)
       }, {})
@@ -127,24 +146,22 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.setState({ visible: true })
     }
 
+    if (this.settings.autoResize && this.autoResize && !this.resizeObserver) {
+      this.resizeObserver = this.cloudtasks.onWindowGrow.pipe(auditTime(1000)).subscribe(() => {
+        const previousWidth = this.width
+        this.setSize()
+
+        if (this.width > previousWidth) {
+          this.setImage()
+        }
+      })
+    }
+
     if (this.size) {
-      this.init()
+      this.setImage()
     } else {
-      let element = this.el
-      let style = (((typeof window !== 'undefined' && window) as any) || (global as any)).getComputedStyle(element)
-      this.width = parseInt(style.width, 10) || 0
-      this.height = parseInt(style.height, 10) || 0
-
-      while (
-        (element = element !== null ? element.parentNode : void 0) instanceof Element &&
-        (this.width <= 0 || this.height <= 0)
-      ) {
-        style = (((typeof window !== 'undefined' && window) as any) || (global as any)).getComputedStyle(element)
-        this.width = parseInt(style.width, 10)
-        this.height = parseInt(style.height, 10)
-      }
-
-      this.init()
+      this.setSize()
+      this.setImage()
     }
   }
 
@@ -152,6 +169,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     if (this.intersectionObserver) {
       this.intersectionObserver.unobserve(<Element>this.el)
       this.intersectionObserver.disconnect()
+    }
+
+    if (this.resizeObserver) {
+      this.resizeObserver.unsubscribe()
     }
   }
 
@@ -174,7 +195,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private init() {
+  private setImage() {
     if (this.placeholder || this.settings.placeholderImage) {
       this.renderer.setStyle(this.el, 'background-image', 'url(//' + this.getDefaultURL() + ')')
     }
@@ -206,6 +227,22 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const a = this.renderer.createElement('a')
     a.href = this.src
     return /localhost$|\.local$|:\d{2,4}$/i.test(a.hostname)
+  }
+
+  private setSize(): void {
+    let element = this.el
+    let style = (((typeof window !== 'undefined' && window) as any) || (global as any)).getComputedStyle(element)
+    this.width = parseInt(style.width, 10) || 0
+    this.height = parseInt(style.height, 10) || 0
+
+    while (
+      (element = element !== null ? element.parentNode : void 0) instanceof Element &&
+      (this.width <= 0 || this.height <= 0)
+    ) {
+      style = (((typeof window !== 'undefined' && window) as any) || (global as any)).getComputedStyle(element)
+      this.width = parseInt(style.width, 10)
+      this.height = parseInt(style.height, 10)
+    }
   }
 
   private getSize(): string {

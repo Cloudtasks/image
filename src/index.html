@@ -25,6 +25,7 @@
     <ct-img
       src="https://images.pexels.com/photos/52500/horse-herd-fog-nature-52500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
       alt="bar"
+      auto-resize="false"
     ></ct-img>
 
     <p>
@@ -73,6 +74,9 @@
     <script>
       setTimeout(() => {
         document.getElementById("dynamic-img").src = "/assets/angular-logo.png";
+        setTimeout(() => {
+          document.getElementById("dynamic-img").src = "https://images.pexels.com/photos/2543253/pexels-photo-2543253.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
+        }, 2000)
       }, 2000)
     </script>
   </body>

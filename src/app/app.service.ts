@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core'
+import { Injectable, EventEmitter } from '@angular/core'
 
 export interface Settings {
   apiKey: string
   dev?: boolean
   lazy?: boolean
+  autoResize?: boolean
   options?: any
   placeholderImage?: string
   photoWidths: number[]
@@ -18,6 +19,7 @@ export class CloudtasksService {
     apiKey: '',
     dev: false,
     lazy: 'IntersectionObserver' in window,
+    autoResize: true,
     options: {},
     placeholderImage: '',
     photoWidths: [
@@ -152,6 +154,10 @@ export class CloudtasksService {
     ]
   }
 
+  public onWindowGrow = new EventEmitter()
+
+  private windowBiggestWidth: number
+
   constructor() {
     if (typeof window !== 'undefined' && this.canUseWebP()) {
       this.settings.options.convert = 'webp'
@@ -175,6 +181,14 @@ export class CloudtasksService {
     if (typeof window !== 'undefined') {
       Object.assign(window as any, { cloudtasks: this })
     }
+
+    this.windowBiggestWidth = window.innerWidth
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > this.windowBiggestWidth) {
+        this.windowBiggestWidth = window.innerWidth
+        this.onWindowGrow.emit()
+      }
+    })
   }
 
   /**
