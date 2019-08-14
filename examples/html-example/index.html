@@ -15,18 +15,16 @@
     <script>
       window.cloudtasks = {
         apiKey: '78e8a5ae8293dcd935ac0bf9146bd622f20096fc'
-        // apiKey: 'test',
-        // dev: true
       }
     </script>
-    <script defer src="/cloudtasks-image.js"></script>
-    <!-- <script defer src="https://cdn.jsdelivr.net/npm/@cloudtasks/image@1/dist/cloudtasks-image.min.js"></script> -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@cloudtasks/image@1/dist/cloudtasks-image.min.js"></script>
   </head>
 
   <body style="padding: 0 10vw">
     <ct-img
       src="https://images.pexels.com/photos/52500/horse-herd-fog-nature-52500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
       alt="bar"
+      [autoResize]="false"
     ></ct-img>
 
     <p>
@@ -71,10 +69,15 @@
       laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
     </p>
 
-    <cloudtasks-img src="/angular-logo.png"></cloudtasks-img>
-
+    <cloudtasks-img id="dynamic-img" src="/"></cloudtasks-img>
     <script>
-      console.log(cloudtasks)
+      setTimeout(() => {
+        document.getElementById('dynamic-img').src = '/assets/angular-logo.png'
+        setTimeout(() => {
+          document.getElementById('dynamic-img').src =
+            'https://images.pexels.com/photos/2543253/pexels-photo-2543253.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
+        }, 2000)
+      }, 2000)
     </script>
   </body>
 </html>

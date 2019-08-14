@@ -247,7 +247,9 @@ export class CloudtasksService {
       options +
       size +
       '/' +
-      encodeURIComponent(decodeURIComponent(url))
+      encodeURIComponent(decodeURIComponent(url.replace(/\+/g, ' ')))
+        .replace(/'/g, '%27')
+        .replace(/"/g, '%22')
     )
   }
 
