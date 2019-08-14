@@ -36,7 +36,7 @@ Finally, you can use cloudtasks-image in your website by replacing your ```img``
 ```
 
 ## API
-#### Settings
+### Settings
 - `clientId`: (string) Cloudtasks.io client id
 - `dev`: (boolean) Set environment to dev (default: false)
 - `options`: (object) Global options for image processing ([Docs](https://cloudtasks.io/docs/image/#image))
@@ -54,6 +54,24 @@ Finally, you can use cloudtasks-image in your website by replacing your ```img``
 - `[forceSize]`: (boolean) (optional) Forces the exact size for image processing
 - `[autoResize]`: (boolean) (optional) Re-processes image when its resized to a larger container (default: true)
 - `(is-visible)`: (EventEmitter) (optional) triggered once the image enters the viewport
+
+#### Options
+- `fit`: (cover | contain | fill | inside | outside) How the image should be resized to fit both provided dimensions, one of (default: inside / cover when using smart detection)
+  - `cover`: Crop to cover both provided dimensions (the default).
+  - `contain`: Embed within both provided dimensions.
+  - `fill`: Ignore the aspect ratio of the input and stretch to both provided dimensions.
+  - `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
+  - `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified. 
+- `trim`: (boolean | number) Trim "boring" pixels from all edges that contain values similar to the top-left pixel. (default: false)
+- `smart`: (boolean) Use 'smart' detection to center the image based on faces and features in the image. (default: false)
+- `filters`: () Apply [filters](https://sharp.pixelplumbing.com/en/stable/api-operation/) to the image.
+- `crop`: ((number|orig)x(number|orig):(number|orig)x(number|orig)) Extract a region of the image.
+- `center`: () Force center when using manual crop
+- `auto-orient`: (boolean) Auto image orientation based on its metadata.
+- `quality`: (number | string) Defined quality or quality range for image optimization.
+- `convert`: (webp | png | jpg | gif) Convert image to the specified format
+- `cache`: (number) Cache-Control max age in seconds
+- `skipOptimization`: (boolean) Skip image optimization 
 
 Example:
 ```html

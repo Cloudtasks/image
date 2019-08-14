@@ -15,7 +15,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/cloudtasks",
             "index": "src/index.html",
@@ -30,7 +30,11 @@
               }
             ],
             "es5BrowserSupport": true,
-            "aot": true
+            "aot": true,
+            "customWebpackConfig": {
+              "path": "./extra-webpack.config.js",
+              "mergeStrategies": { "externals": "replace" }
+            }
           },
           "configurations": {
             "production": {
