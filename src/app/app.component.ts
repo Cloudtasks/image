@@ -204,7 +204,11 @@ export class AppComponent implements OnDestroy {
   }
 
   private getURL(): string {
-    return this.cloudtasks.buildUrl(this.cloudtasks.resolve(this.src), this.getSize(), this.optionsString)
+    const url = this.cloudtasks.resolve(this.src)
+    if (url) {
+      return this.cloudtasks.buildUrl(url, this.getSize(), this.optionsString)
+    }
+    return ''
   }
 
   private getDefaultURL(): string {
