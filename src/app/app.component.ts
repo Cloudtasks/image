@@ -27,7 +27,9 @@ export class AppComponent implements OnDestroy {
   private _options: any
   private _placeholder: string
   private _size: string
-  private _forceSize: boolean
+  private _fit: 'cover' | 'inside' | 'contain' | 'fill' | 'outside'
+  private _convert: 'cover' | 'inside' | 'contain' | 'fill' | 'outside'
+  private _exact: boolean
   private _autoResize = true
 
   @Input()
@@ -76,20 +78,36 @@ export class AppComponent implements OnDestroy {
   }
 
   @Input()
-  set forceSize(forceSize: boolean) {
-    this._forceSize = forceSize === true || ((forceSize as unknown) as string) === 'true'
+  set fit(fit: 'cover' | 'inside' | 'contain' | 'fill' | 'outside') {
+    this._fit = fit
     this.init()
   }
-  get forceSize(): boolean {
-    return this._forceSize
+  get fit(): 'cover' | 'inside' | 'contain' | 'fill' | 'outside' {
+    return this._fit
+  }
+
+  @Input()
+  set convert(convert: 'cover' | 'inside' | 'contain' | 'fill' | 'outside') {
+    this._convert = convert
+    this.init()
+  }
+  get convert(): 'cover' | 'inside' | 'contain' | 'fill' | 'outside' {
+    return this._convert
+  }
+
+  @Input()
+  set exact(exact: boolean) {
+    this._exact = exact === true || ((exact as unknown) as string) === 'true'
+    this.init()
+  }
+  get exact(): boolean {
+    return this._exact
   }
 
   @Input()
   set autoResize(autoResize: boolean) {
     const value = autoResize === true || ((autoResize as unknown) as string) === 'true'
-    console.log(value)
     if (this._autoResize !== value && !value && this.resizeObserver) {
-      console.log('unsubscribe')
       this.resizeObserver.unsubscribe()
     }
     this._autoResize = value
@@ -255,7 +273,7 @@ export class AppComponent implements OnDestroy {
     if (this.size) {
       calc = this.size
     } else {
-      if (!this.forceSize) {
+      if (!this.exact) {
         if (this.width) {
           for (let x = 0; x < this.settings.photoWidths.length; x++) {
             if (this.settings.photoWidths[x] < this.width) {
@@ -296,10 +314,18 @@ export class AppComponent implements OnDestroy {
   }
 
   private parseOptions() {
-    let options = Object.assign({}, this.settings.options)
+    let options = { ...this.settings.options }
 
     if (this.options) {
-      options = Object.assign(options, this.options)
+      options = { ...options, ...this.options }
+    }
+
+    if (this.fit) {
+      options = { ...options, fit: this.fit }
+    }
+
+    if (this.convert) {
+      options = { ...options, convert: this.convert }
     }
 
     let optionsString = '/'
@@ -313,9 +339,9 @@ export class AppComponent implements OnDestroy {
 
       if (value) {
         if (typeof value === 'string') {
-          optionsString = optionsString + key + ':' + value + '/'
+          optionsString = `${optionsString}${key}:${value}/`
         } else {
-          optionsString = optionsString + key + '/'
+          optionsString = `${optionsString}${key}/`
         }
       }
     }

@@ -51,7 +51,8 @@ Finally, you can use cloudtasks-image in your website by replacing your ```img``
 - `[options]`: (object) (optional) Sets options for image processing ([Docs](https://cloudtasks.io/docs/image/#image))
 - `[placeholder]`: (string) (optional) Sets placeholder image url to be used while waiting for original image
 - `[size]`: (string) (optional) Sets size for image processing (if not set we will try to check the best size automatically)
-- `[forceSize]`: (boolean) (optional) Forces the exact size for image processing
+- `[fit]`: (cover | contain | fill | inside | outside) (optional) How the image should be resized to fit both provided dimensions, one of (default: inside / cover when using smart detection)
+- `[exact]`: (boolean) (optional) Forces the exact size for image processing ignoring photoWidths and photoHeights matrix
 - `[autoResize]`: (boolean) (optional) Re-processes image when its resized to a larger container (default: true)
 - `(is-visible)`: (EventEmitter) (optional) triggered once the image enters the viewport
 
@@ -61,7 +62,7 @@ Finally, you can use cloudtasks-image in your website by replacing your ```img``
   - `contain`: Embed within both provided dimensions.
   - `fill`: Ignore the aspect ratio of the input and stretch to both provided dimensions.
   - `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
-  - `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified. 
+  - `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified.
 - `trim`: (boolean | number) Trim "boring" pixels from all edges that contain values similar to the top-left pixel. (default: false)
 - `smart`: (boolean) Use 'smart' detection to center the image based on faces and features in the image. (default: false)
 - `filters`: () Apply [filters](https://sharp.pixelplumbing.com/en/stable/api-operation/) to the image.
@@ -71,7 +72,7 @@ Finally, you can use cloudtasks-image in your website by replacing your ```img``
 - `quality`: (number | string) Defined quality or quality range for image optimization.
 - `convert`: (webp | png | jpg | gif) Convert image to the specified format
 - `cache`: (number) Cache-Control max age in seconds
-- `skipOptimization`: (boolean) Skip image optimization 
+- `skipOptimization`: (boolean) Skip image optimization
 
 Example:
 ```html
